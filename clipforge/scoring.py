@@ -32,18 +32,45 @@ PALABRAS_CLAVE = {
     # narrativa
     "nunca": 2, "jamás": 2, "nadie": 2, "mejor": 2, "peor": 2,
     "verdad": 2, "importante": 2, "clave": 2, "gravísimo": 3, "grave": 2,
-    # motor / MotoGP (contexto del canal)
-    "adelantamiento": 2, "accidente": 3, "caída": 3, "sanción": 3, "multa": 2,
-    "descalificado": 3, "pole": 2, "victoria": 2, "campeón": 2, "mundial": 2, "podio": 2,
-    "márquez": 2, "marquez": 2, "bagnaia": 2, "pecco": 2, "acosta": 2,
-    "quartararo": 2, "martín": 2, "viñales": 2, "rossi": 2, "lorenzo": 2,
-    "ducati": 2, "yamaha": 2, "honda": 2, "ktm": 2, "aprilia": 2, "motogp": 2,
+    # carrera / MotoGP (contexto del canal)
+    "adelantamiento": 2, "accidente": 3, "caída": 3, "caído": 2, "sanción": 3,
+    "multa": 2, "descalificado": 3, "pole": 2, "victoria": 2, "campeón": 2,
+    "mundial": 2, "podio": 2, "motogp": 2, "moto2": 1, "moto3": 1, "sprint": 2,
+    "highside": 3, "lowside": 2, "holeshot": 1, "rebufo": 1, "long lap": 2,
+    "ride through": 2, "track limits": 2, "banderazo": 2, "última vuelta": 3,
+    "vuelta rápida": 2, "concesiones": 2, "dirección de carrera": 3,
+    "comisarios": 2, "apelación": 2, "lesión": 2, "test": 1,
+    # mercado de pilotos
+    "fichaje": 3, "renovación": 2, "contrato": 2, "rumor": 2, "mercado de pilotos": 3,
+    # pilotos MotoGP
+    "márquez": 2, "marquez": 2, "álex márquez": 2, "alex márquez": 2,
+    "bagnaia": 2, "pecco": 2, "jorge martín": 3, "martín": 2, "acosta": 2,
+    "quartararo": 2, "viñales": 2, "bezzecchi": 2, "binder": 2, "miller": 2,
+    "mir": 2, "rins": 2, "zarco": 2, "aldeguer": 2, "ogura": 2, "morbidelli": 2,
+    "di giannantonio": 2, "diggia": 2, "bastianini": 2, "oliveira": 2,
+    "espargaró": 2, "raúl fernández": 2, "moreira": 2,
+    # leyendas y tertulia
+    "rossi": 2, "lorenzo": 2, "pedrosa": 2, "stoner": 2, "dovizioso": 2, "crivillé": 2,
+    # WSBK
+    "toprak": 2, "razgatlioglu": 2, "bulega": 2, "rea": 2, "bautista": 2,
+    # equipos y paddock
+    "ducati": 2, "yamaha": 2, "honda": 2, "ktm": 2, "aprilia": 2,
+    "pramac": 2, "gresini": 2, "trackhouse": 2, "lcr": 2, "vr46": 2,
+    "dall'igna": 2, "tardozzi": 2, "ezpeleta": 2, "dorna": 2,
 }
+
+_RE_KW = None
 
 
 def _kw(texto):
-    t = " " + texto.lower() + " "
-    return sum(p for k, p in PALABRAS_CLAVE.items() if k in t)
+    """Suma de pesos de las palabras clave presentes (palabra completa:
+    así 'Mir' puntúa el piloto pero no confunde 'mirar')."""
+    global _RE_KW
+    if _RE_KW is None:
+        _RE_KW = [(re.compile(r"\b" + re.escape(k) + r"\b"), p)
+                  for k, p in PALABRAS_CLAVE.items()]
+    t = texto.lower()
+    return sum(p for rx, p in _RE_KW if rx.search(t))
 
 
 def puntuar_frases(frases, feat, viral, nov):

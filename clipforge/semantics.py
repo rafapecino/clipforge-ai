@@ -19,6 +19,10 @@ CONSULTAS_VIRALES = [
     "una crítica dura a alguien famoso",
     "dinero, cifras enormes y récords",
     "un anuncio o revelación exclusiva",
+    "una caída o un accidente espectacular en una carrera de motos",
+    "un adelantamiento increíble en la última vuelta",
+    "una polémica sobre una sanción o la dirección de carrera",
+    "un fichaje bomba o un rumor del mercado de pilotos",
 ]
 
 _modelo = None
