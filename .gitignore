@@ -1,0 +1,19 @@
+# Claude Code
+.claude/
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Artefactos de vídeo/audio (nunca subir al repo)
+*.mp4
+*.wav
+*.ass
+*.png
+cache/
+clipwork/
+
+# Sistema
+.DS_Store
+Thumbs.db

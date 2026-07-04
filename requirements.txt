@@ -1,0 +1,12 @@
+# Dependencias para ejecutar el paquete clipforge fuera de Colab.
+# (En Colab basta con ejecutar la celda 1 del notebook: el resto viene preinstalado.)
+faster-whisper>=1.0.3
+sentence-transformers
+mediapipe
+google-genai
+librosa
+opencv-python
+numpy
+pandas
+tqdm
+requests
